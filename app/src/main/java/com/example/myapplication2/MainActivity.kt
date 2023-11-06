@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.hmToSetting.setOnClickListener{
-            val intent = Intent(this, TaskSettingActivity::class.java)
+            val intent = Intent(this, CharacterActivity::class.java)
             startActivity(intent)
         }
 

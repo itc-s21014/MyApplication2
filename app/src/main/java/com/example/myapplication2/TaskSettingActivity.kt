@@ -34,12 +34,12 @@ class TaskSettingActivity : AppCompatActivity() {
         }
 
         button2.setOnClickListener {
-            intent = Intent(this, CharacterActivity::class.java)
+            intent = Intent(this, SettingFinishedActivity::class.java)
             startActivity(intent)
         }
 
         button3.setOnClickListener {
-            intent = Intent(this, MainActivity::class.java)
+            intent = Intent(this, CharacterActivity::class.java)
             startActivity(intent)
         }
 
