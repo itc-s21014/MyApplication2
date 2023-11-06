@@ -1,0 +1,46 @@
+<resources>
+    <string name="app_name">myapplication</string>
+    <string name="re_turn">←</string>
+    <string name="task2">タスク名</string>
+    <string name="time">所要時間</string>
+    <string name="plus">+</string>
+    <string name="finish">完了</string>
+    <string name="nowtime">現在時刻</string>
+    <string name="starttime">出発時刻</string>
+    <string name="back_home">←HOME</string>
+    <string name="reset">reset</string>
+    <string name="nexttask">次のタスク：</string>
+
+    <!--    home-->
+    <string name="hm_home">HOME</string>
+    <string name="hm_to_setting">設定する</string>
+    <string name="hm_start">START</string>
+    <string name="hm_to_how_to_use">？</string>
+
+    <!--    setting finished-->
+    <string name="sf_setting_finished">登録完了⏱</string>
+    <string name="sf_to_home">HOMEに戻る</string>
+    <string name="sf_to_use">使ってみる</string>
+
+    <!--    character-->
+    <string name="chara_back">←</string>
+    <string name="chara_question">あなたの性格は？</string>
+    <string name="chara_tekipaki">てきぱき</string>
+    <string name="chara_nombiri">のんびり</string>
+    <string name="chara_finished">完了</string>
+
+    <!--    how to use-->
+    <string name="htu_back">←</string>
+    <string name="how_to_use">使い方</string>
+    <string name="htu_explanation">
+        ①はじめに「設定する」ボタンでメニューページに移動してみましょう！タスク設定では各タスク名と所要時間を追加、性格設定ではあなたの性格を選択します。\n\n
+        <b>タスク設定</b>\nタスク名とそのタスクを終えるために必要な時間を設定します。「＋」ボタンでタスクを増やすことができます。必ず実行しないといけないタスクには「☆」をつけましょう！とても急がないといけないとき、☆のついていないタスクは使用されない場合があります。\n\n
+        <b>性格設定</b>\nあなたはどんな性格ですか？「のんびり」を選択すると、予定時刻よりはやめに時刻をお知らせします。デフォルトでは「テキパキ」が設定されています。\n\n\n
+        ②登録が完了したらさっそく使ってみましょう！「使ってみる」または「START」ボタンから時刻設定画面に移動して、現在時刻と出発予定時刻の入力をします。\n\n\n
+        ③入力を終えたら「START」してみましょう！次のタスクにとりかかる時間になると通知でお知らせします！(「RESET」ボタンを押すと、タイマーを中断してホーム画面に戻ります。)
+    </string>
+    <string name="hint_key">company</string>
+    <string name="hint_value">US$price</string>
+    <string name="insert">insert</string>
+    <string name="read">read</string>
+</resources>
