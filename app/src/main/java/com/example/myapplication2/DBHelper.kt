@@ -8,11 +8,24 @@ import android.database.sqlite.SQLiteOpenHelper
 
 class DBHelper(context: Context): SQLiteOpenHelper(context, "Userdata", null, 1) {
     override fun onCreate(p0: SQLiteDatabase?) {
-        p0?.execSQL("create table Userdata (name TEXT primary key, contact TEXT)")
+        p0?.execSQL("create table Userdata (name TEXT primary key, contact TEXT, charactar_item_id INTEGER DEFAULT '1' NOT NULL, FOREIGN KEY (charactar_item_id) REFERENCES charactardata(item_id))")
+        p0?.execSQL("create table characterdata (item_id INTEGER primary key, item_name TEXT)")
+        p0?.execSQL("INSERT INTO charactardata (item_id, item_name)" + "VALUES('1', 'てきぱき')")
+        p0?.execSQL("INSERT INTO charactardata (item_id, item_name)" + "VALUES('2', 'のんびり')")
     }
 
     override fun onUpgrade(p0: SQLiteDatabase?, p1: Int, p2: Int) {
         p0?.execSQL("drop table if exists Userdata")
+        p0?.execSQL("drop table if exists characterdata")
+        onCreate(p0)
+    }
+
+    fun saveCharacterData(item_id: Int): Boolean {
+        val db = this.writableDatabase
+        val cv = ContentValues()
+        cv.put("item_id", item_id)
+        val result = db.insert("characterdata", null, cv)
+        return result != -1L
     }
 
     fun saveuserdata(name: String, contact: String): Boolean {
@@ -56,6 +69,12 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, "Userdata", null, 1)
     fun gettext(): Cursor? {
         val p0 = this.writableDatabase
         val cursor = p0.rawQuery("select * from Userdata", null)
+        return cursor
+    }
+
+    fun getCharacterData(): Cursor? {
+        val p0 = this.readableDatabase
+        val cursor = p0.rawQuery("SELECT * FROM characterdata", null)
         return cursor
     }
 }
