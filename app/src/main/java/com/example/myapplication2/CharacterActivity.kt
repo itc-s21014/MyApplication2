@@ -46,7 +46,7 @@ class CharacterActivity : AppCompatActivity() {
         }
 
         binding.charaFinished.setOnClickListener{
-            val isDataSaved = dbHelper.saveCharacterData(0)
+            val isDataSaved = dbHelper.saveCharacterData(1)
             if (isDataSaved) {
                 val characterData = dbHelper.getCharacterData()
                 if (characterData != null) {
