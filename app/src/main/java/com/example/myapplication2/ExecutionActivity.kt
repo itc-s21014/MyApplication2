@@ -24,10 +24,11 @@ class ExecutionActivity : AppCompatActivity() {
     private val handler = Handler(Looper.getMainLooper())
     private val taskList = arrayListOf(
         "起床",
-        "朝食",
+        "食事",
         "お風呂",
         "着替え",
         "歯磨き",
+        "髪のセット",
         "出発"
     )
     private var currentTaskIndex = 0
@@ -88,7 +89,7 @@ class ExecutionActivity : AppCompatActivity() {
     private fun updateTask() {
         if (currentTaskIndex < taskList.size) {
             taskTextView.text = taskList[currentTaskIndex]
-            currentTaskIndex++
+//            currentTaskIndex++
         } else {
             finish()
             val nextIntent = Intent(this@ExecutionActivity, EndActivity::class.java)

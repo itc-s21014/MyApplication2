@@ -31,7 +31,9 @@ class CharacterActivity : AppCompatActivity() {
                 charaTekipaki.setBackgroundColor(Color.WHITE)
             } else {
                 charaTekipaki.setBackgroundColor(Color.CYAN)
-                dbHelper.saveCharacterData(1)
+                nombiriClickCount = 0
+                charaNombiri.setBackgroundColor(Color.WHITE)
+//                dbHelper.saveCharacterData(1)
             }
         }
 
@@ -41,11 +43,13 @@ class CharacterActivity : AppCompatActivity() {
                 charaNombiri.setBackgroundColor(Color.WHITE)
             } else {
                 charaNombiri.setBackgroundColor(Color.CYAN)
-                dbHelper.saveCharacterData(2)
+                tekipakiClickCount = 0
+                charaTekipaki.setBackgroundColor(Color.WHITE)
+//                dbHelper.saveCharacterData(2)
             }
         }
 
-        binding.charaFinished.setOnClickListener{
+        binding.charaFinished.setOnClickListener {
             val isDataSaved = dbHelper.saveCharacterData(1)
             if (isDataSaved) {
                 val characterData = dbHelper.getCharacterData()
