@@ -16,6 +16,8 @@ class CharacterActivity : AppCompatActivity() {
     private var nombiriClickCount = 0
     private lateinit var dbHelper: DBHelper
 
+    private var selectedCharacterId = 1
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCharacterBinding.inflate(layoutInflater)
@@ -31,9 +33,8 @@ class CharacterActivity : AppCompatActivity() {
                 charaTekipaki.setBackgroundColor(Color.WHITE)
             } else {
                 charaTekipaki.setBackgroundColor(Color.CYAN)
-                nombiriClickCount = 0
-                charaNombiri.setBackgroundColor(Color.WHITE)
-//                dbHelper.saveCharacterData(1)
+                selectedCharacterId = 1 // charaTekipakiに対応するID
+                dbHelper.saveCharacterData(selectedCharacterId)
             }
         }
 
@@ -43,20 +44,19 @@ class CharacterActivity : AppCompatActivity() {
                 charaNombiri.setBackgroundColor(Color.WHITE)
             } else {
                 charaNombiri.setBackgroundColor(Color.CYAN)
-                tekipakiClickCount = 0
-                charaTekipaki.setBackgroundColor(Color.WHITE)
-//                dbHelper.saveCharacterData(2)
+                selectedCharacterId = 2 // charaNombiriに対応するID
+                dbHelper.saveCharacterData(selectedCharacterId)
             }
         }
 
-        binding.charaFinished.setOnClickListener {
-            val isDataSaved = dbHelper.saveCharacterData(1)
+        binding.charaFinished.setOnClickListener{
+            val isDataSaved = dbHelper.saveCharacterData(selectedCharacterId)
             if (isDataSaved) {
-                val characterData = dbHelper.getCharacterData()
+                val characterData = dbHelper.getCharacterData(selectedCharacterId)
                 if (characterData != null) {
                     if (characterData.moveToFirst()) {
                         do {
-                            val id = characterData.getInt(1)
+                            val id = characterData.getInt(0)
                             // 取得したデータを処理する（例：ログに出力する）
                             Log.d("CharacterActivity", "ID: $id")
                         } while (characterData.moveToNext())
@@ -71,6 +71,7 @@ class CharacterActivity : AppCompatActivity() {
                 Log.d("CharacterActivity", "Failed to save data")
             }
             val intent = Intent(this, TaskSettingActivity::class.java)
+            intent.putExtra("id",1 or 2)
             startActivity(intent)
         }
 

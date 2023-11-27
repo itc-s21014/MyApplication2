@@ -26,11 +26,14 @@ class TaskSettingActivity2 : AppCompatActivity() {
         save = findViewById(R.id.button)
         db = DBHelper(this)
 
+        val id = intent.getIntExtra("id", 1 or 2)
+
         save.setOnClickListener {
             val intent = Intent(this, TaskSettingActivity::class.java)
             val names = name.text.toString()
             val numbers = phone.text.toString()
-            val savedata = db.saveuserdata(names, numbers)
+
+            val savedata = db.saveuserdata(names, numbers, id)
             if (TextUtils.isEmpty(names) || TextUtils.isEmpty(numbers)){
                 Toast.makeText(this, "Add Name & Phone Number", Toast.LENGTH_SHORT).show()
             }

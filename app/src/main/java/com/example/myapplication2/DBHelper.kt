@@ -24,17 +24,31 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, "Userdata", null, 1)
         val db = this.writableDatabase
         val cv = ContentValues()
         cv.put("item_id", item_id)
-        val result = db.insert("characterdata", null, cv)
-        return result != -1L
+
+        // データが既に存在しているか確認
+        val existingData = db.rawQuery("SELECT * FROM characterdata WHERE item_id = ?", arrayOf(item_id.toString()))
+
+        if (existingData.count == 0) {
+            // データが存在しない場合のみ挿入
+            val result = db.insert("characterdata", null, cv)
+            existingData.close()
+            return result != -1L
+        } else {
+            // データが既に存在する場合は何もせずにtrueを返す
+            existingData.close()
+            return true
+        }
     }
 
-    fun saveuserdata(name: String, contact: String): Boolean {
+
+    fun saveuserdata(name: String, contact: String, characteritemid: Int): Boolean {
         val p0 = this.writableDatabase
         val cv = ContentValues()
         cv.put("name", name)
         cv.put("contact", contact)
+        cv.put("character_item_id", characteritemid)
         val result = p0.insert("Userdata", null, cv)
-        if (result == -1 .toLong()){
+        if (result != -1L) {
             return false
         }
         return true
@@ -72,9 +86,11 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, "Userdata", null, 1)
         return cursor
     }
 
-    fun getCharacterData(): Cursor? {
+    // ここにコード追加するCharacterActivityの55行目val characterData = dbHelper.getCharacterData()
+    // で選択したIDを取得する
+    fun getCharacterData(item_id: Int): Cursor? {
         val p0 = this.readableDatabase
-        val cursor = p0.rawQuery("SELECT * FROM characterdata", null)
+        val cursor = p0.rawQuery("SELECT * FROM characterdata WHERE item_id = ?", arrayOf(item_id.toString()))
         return cursor
     }
 }
