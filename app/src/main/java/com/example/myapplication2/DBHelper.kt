@@ -68,6 +68,16 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, "Userdata", null, 1)
         }
     }
 
+    fun updateAllCharacterIds(characterItemId: Int): Boolean {
+        val db = this.writableDatabase
+        val cv = ContentValues()
+        cv.put("character_item_id", characterItemId)
+
+        val result = db.update("Userdata", cv, null, null)
+        return result != -1
+    }
+
+
     fun deleteuserdata(name: String): Boolean {
         val p0 = this.writableDatabase
         val cursor: Cursor = p0.rawQuery("select * from Userdata where name = ?", arrayOf(name))
