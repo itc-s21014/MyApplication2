@@ -24,7 +24,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".TaskSettingActivity"
-            android:exported="true"/>
+            android:exported="true"
+            android:parentActivityName=".TaskSettingActivity2"/>
         <activity android:name=".TaskSettingActivity2"
             android:exported="false"
             android:label="Add Contact"
@@ -34,7 +35,8 @@
             android:label="Delete and Update"
             android:parentActivityName=".TaskSettingActivity"/>
         <activity android:name=".CharacterActivity"
-            android:exported="true"/>
+            android:exported="true"
+            android:parentActivityName=".TaskSettingActivity"/>
         <activity android:name=".SettingFinishedActivity"
             android:exported="true"/>
         <activity android:name=".TimeSettingActivity"

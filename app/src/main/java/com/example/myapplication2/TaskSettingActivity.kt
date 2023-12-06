@@ -28,8 +28,11 @@ class TaskSettingActivity : AppCompatActivity() {
         button2 = findViewById(R.id.button2)
         button3 = findViewById(R.id.button3)
 
+        val id = intent.getIntExtra("id", 1 or 2)
+
         button.setOnClickListener{
             intent = Intent(this, TaskSettingActivity2::class.java)
+            intent.putExtra("id", id)
             startActivity(intent)
         }
 
