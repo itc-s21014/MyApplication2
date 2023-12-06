@@ -22,15 +22,7 @@ class ExecutionActivity : AppCompatActivity() {
     private lateinit var updateTimeRunnable: Runnable
     private val dateFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
     private val handler = Handler(Looper.getMainLooper())
-    private val taskList = arrayListOf(
-        "起床",
-        "食事",
-        "お風呂",
-        "着替え",
-        "歯磨き",
-        "髪のセット",
-        "出発"
-    )
+    private val taskList = arrayListOf("null")
     private var currentTaskIndex = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,17 +42,23 @@ class ExecutionActivity : AppCompatActivity() {
 
         taskTextView = findViewById(R.id.textView7)
 
+        val task = intent.getStringExtra("task")
+
+        if (task != null) {
+            taskTextView.text = task
+        }
+
         scheduleScreenTransition(this)
 
         displayCurrentTime()
 
         updateRealTime()
 
-        updateTask()
+//        updateTask()
 
 //        runTextAnimation()
 
-        val updateTimeDelayMillis: Int = 1000 * 60
+        val updateTimeDelayMillis: Int = 1000 * 10
         handler.postDelayed(object : Runnable {
             override fun run() {
                 currentTaskIndex = (currentTaskIndex + 1) % taskList.size
@@ -88,41 +86,43 @@ class ExecutionActivity : AppCompatActivity() {
 
     private fun updateTask() {
         if (currentTaskIndex < taskList.size) {
-            taskTextView.text = taskList[currentTaskIndex]
+            val task = taskList[currentTaskIndex]
+            taskTextView.text = task
 //            currentTaskIndex++
-        } else {
+        }
+        if (currentTaskIndex == taskList.size) {
             finish()
             val nextIntent = Intent(this@ExecutionActivity, EndActivity::class.java)
             startActivity(nextIntent)
         }
     }
 
-/*    private fun getTaskForTime(time: String): String {
-        for (pair in taskList) {
-            if (pair.first == time) {
-                return (pair.second)
+    /*    private fun getTaskForTime(time: String): String {
+            for (pair in taskList) {
+                if (pair.first == time) {
+                    return (pair.second)
+                }
             }
+            return "該当するタスクがありません"
         }
-        return "該当するタスクがありません"
-    }
- */
+     */
 
-/*    private fun runTextAnimation() {
-        val textView = findViewById<TextView>(R.id.textView7)
-        val screenWidth = resources.displayMetrics.widthPixels
-        val textViewWidth = textView.width.toFloat()
+    /*    private fun runTextAnimation() {
+            val textView = findViewById<TextView>(R.id.textView7)
+            val screenWidth = resources.displayMetrics.widthPixels
+            val textViewWidth = textView.width.toFloat()
 
-        val distance = screenWidth + textViewWidth
+            val distance = screenWidth + textViewWidth
 
-        val duration = 10000L
+            val duration = 10000L
 
-        textView.translationX = -textViewWidth
-        textView.animate()
-            .translationXBy(distance)
-            .setDuration(duration)
-            .withEndAction { runTextAnimation() }
-    }
- */
+            textView.translationX = -textViewWidth
+            textView.animate()
+                .translationXBy(distance)
+                .setDuration(duration)
+                .withEndAction { runTextAnimation() }
+        }
+     */
 
     private fun displayCurrentTime() {
 
