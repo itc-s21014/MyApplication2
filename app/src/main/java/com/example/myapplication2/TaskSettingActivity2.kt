@@ -47,6 +47,7 @@ class TaskSettingActivity2 : AppCompatActivity() {
                     Toast.makeText(this, "Exist Contact", Toast.LENGTH_SHORT).show()
                 }
             }
+            intent.putExtra("id", id)
             startActivity(intent)
         }
     }

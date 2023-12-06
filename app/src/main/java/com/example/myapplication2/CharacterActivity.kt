@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication2.databinding.ActivityCharacterBinding
 
@@ -28,25 +29,17 @@ class CharacterActivity : AppCompatActivity() {
         dbHelper = DBHelper(this)
 
         charaTekipaki.setOnClickListener {
-            tekipakiClickCount++
-            if (tekipakiClickCount % 2 == 0) {
-                charaTekipaki.setBackgroundColor(Color.WHITE)
-            } else {
-                charaTekipaki.setBackgroundColor(Color.CYAN)
-                selectedCharacterId = 1 // charaTekipakiに対応するID
-                dbHelper.saveCharacterData(selectedCharacterId)
-            }
+            charaTekipaki.setBackgroundColor(Color.CYAN)
+            charaNombiri.setBackgroundColor(Color.WHITE)
+            selectedCharacterId = 1 // charaTekipakiに対応するID
+            dbHelper.saveCharacterData(selectedCharacterId)
         }
 
         charaNombiri.setOnClickListener {
-            nombiriClickCount++
-            if (nombiriClickCount % 2 == 0) {
-                charaNombiri.setBackgroundColor(Color.WHITE)
-            } else {
-                charaNombiri.setBackgroundColor(Color.CYAN)
-                selectedCharacterId = 2 // charaNombiriに対応するID
-                dbHelper.saveCharacterData(selectedCharacterId)
-            }
+            charaNombiri.setBackgroundColor(Color.CYAN)
+            charaTekipaki.setBackgroundColor(Color.WHITE)
+            selectedCharacterId = 2 // charaNombiriに対応するID
+            dbHelper.saveCharacterData(selectedCharacterId)
         }
 
         binding.charaFinished.setOnClickListener{
@@ -71,7 +64,11 @@ class CharacterActivity : AppCompatActivity() {
                 Log.d("CharacterActivity", "Failed to save data")
             }
             val intent = Intent(this, TaskSettingActivity::class.java)
-            intent.putExtra("id",1 or 2)
+            val updatedata = dbHelper.updateAllCharacterIds(selectedCharacterId)
+            if (updatedata==true){
+                Toast.makeText(this, "性格を更新", Toast.LENGTH_SHORT).show()
+            }
+            intent.putExtra("id",selectedCharacterId)
             startActivity(intent)
         }
 

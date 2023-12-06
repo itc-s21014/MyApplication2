@@ -32,7 +32,7 @@ class TaskSettingActivity : AppCompatActivity() {
 
         button.setOnClickListener{
             intent = Intent(this, TaskSettingActivity2::class.java)
-            intent.putExtra("id", 1 or 2)
+            intent.putExtra("id", id)
             startActivity(intent)
         }
 
