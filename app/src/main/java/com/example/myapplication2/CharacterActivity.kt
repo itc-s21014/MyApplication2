@@ -28,6 +28,8 @@ class CharacterActivity : AppCompatActivity() {
         charaNombiri = findViewById(R.id.charaNombiri)
         dbHelper = DBHelper(this)
 
+        charaTekipaki.setBackgroundColor(Color.CYAN)
+
         charaTekipaki.setOnClickListener {
             charaTekipaki.setBackgroundColor(Color.CYAN)
             charaNombiri.setBackgroundColor(Color.WHITE)
