@@ -4,9 +4,11 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.database.Cursor
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication2.databinding.ActivityExecutionBinding
 import android.widget.TextView
@@ -22,7 +24,9 @@ class ExecutionActivity : AppCompatActivity() {
     private lateinit var updateTimeRunnable: Runnable
     private val dateFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
     private val handler = Handler(Looper.getMainLooper())
-    private val taskList = arrayListOf("null")
+    val taskList: ArrayList<String> = ArrayList()
+    private lateinit var dbh: DBHelper
+    private lateinit var newArray: ArrayList<Datalist>
     private var currentTaskIndex = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,6 +41,14 @@ class ExecutionActivity : AppCompatActivity() {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
+
+        taskList.add("起床")
+        taskList.add("食事")
+        taskList.add("お風呂")
+        taskList.add("着替え")
+        taskList.add("歯磨き")
+        taskList.add("髪のセット")
+        taskList.add("出発")
 
         timeTextView = findViewById(R.id.timeTextView)
 
@@ -54,18 +66,33 @@ class ExecutionActivity : AppCompatActivity() {
 
         updateRealTime()
 
-//        updateTask()
+        dbh = DBHelper(this)
+
+        displayuser()
+
+        updateTask()
 
 //        runTextAnimation()
 
         val updateTimeDelayMillis: Int = 1000 * 10
         handler.postDelayed(object : Runnable {
             override fun run() {
-                currentTaskIndex = (currentTaskIndex + 1) % taskList.size
+                currentTaskIndex = (currentTaskIndex + 1) // % taskList.size
                 updateTask()
                 handler.postDelayed(this, updateTimeDelayMillis.toLong())
             }
         }, updateTimeDelayMillis.toLong())
+    }
+
+    private fun displayuser() {
+        val newcursor: Cursor? = dbh.gettext()
+        newArray = ArrayList<Datalist>()
+        while (newcursor!!.moveToNext()) {
+            val uname = newcursor.getString(0)
+            val unumber = newcursor.getString(1)
+            newArray.add(Datalist(uname, unumber))
+        }
+        Log.d("nandemo iiyo", newArray.toString())
     }
 
     override fun onResume() {
