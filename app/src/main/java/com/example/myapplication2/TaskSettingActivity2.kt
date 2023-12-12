@@ -4,7 +4,9 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
+import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.Spinner
 import android.widget.Toast
 import com.example.myapplication2.databinding.ActivityTaskSetting2Binding
 import com.google.android.material.textfield.TextInputEditText
@@ -12,7 +14,7 @@ import com.google.android.material.textfield.TextInputEditText
 class TaskSettingActivity2 : AppCompatActivity() {
     private lateinit var binding: ActivityTaskSetting2Binding
     private lateinit var name: TextInputEditText
-    private lateinit var phone: TextInputEditText
+    private lateinit var phone: Spinner
     private lateinit var save: Button
     private lateinit var db: DBHelper
 
@@ -22,17 +24,26 @@ class TaskSettingActivity2 : AppCompatActivity() {
         setContentView(binding.root)
 
         name = findViewById(R.id.textedit)
-        phone = findViewById(R.id.textedit2)
+        phone = findViewById(R.id.spinner)
         save = findViewById(R.id.button)
         db = DBHelper(this)
 
         val id = intent.getIntExtra("id", 1 or 2)
 
+        ArrayAdapter.createFromResource(
+            this,
+            R.array.spinner_items,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            phone.adapter = adapter
+        }
+
         save.setOnClickListener {
             val intent = Intent(this, TaskSettingActivity::class.java)
             val task = binding.textedit.text.toString()
             val names = name.text.toString()
-            val numbers = phone.text.toString()
+            val numbers = phone.selectedItem.toString()
 
             if (TextUtils.isEmpty(names) || TextUtils.isEmpty(numbers)){
                 Toast.makeText(this, "Add Name & Phone Number", Toast.LENGTH_SHORT).show()

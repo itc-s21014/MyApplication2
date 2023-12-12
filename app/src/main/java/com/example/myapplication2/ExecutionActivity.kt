@@ -20,11 +20,12 @@ import java.util.Locale
 class ExecutionActivity : AppCompatActivity() {
     private lateinit var binding: ActivityExecutionBinding
     private lateinit var timeTextView: TextView
+    private lateinit var timeRangeTextView: TextView
     private lateinit var taskTextView: TextView
     private lateinit var updateTimeRunnable: Runnable
     private val dateFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
     private val handler = Handler(Looper.getMainLooper())
-    val taskList: ArrayList<String> = ArrayList()
+//    val taskList: ArrayList<String> = ArrayList()
     private lateinit var dbh: DBHelper
     private lateinit var newArray: ArrayList<Datalist>
     private var currentTaskIndex = 0
@@ -35,20 +36,13 @@ class ExecutionActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         timeTextView = binding.timeTextView
+        timeRangeTextView = findViewById(R.id.timeRangeTextView)
         updateTimeRunnable = Runnable { updateClock() }
 
         binding.resetBtn.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
-
-        taskList.add("起床")
-        taskList.add("食事")
-        taskList.add("お風呂")
-        taskList.add("着替え")
-        taskList.add("歯磨き")
-        taskList.add("髪のセット")
-        taskList.add("出発")
 
         timeTextView = findViewById(R.id.timeTextView)
 
@@ -86,7 +80,7 @@ class ExecutionActivity : AppCompatActivity() {
 
     private fun displayuser() {
         val newcursor: Cursor? = dbh.gettext()
-        newArray = ArrayList<Datalist>()
+        newArray = ArrayList()
         while (newcursor!!.moveToNext()) {
             val uname = newcursor.getString(0)
             val unumber = newcursor.getString(1)
@@ -112,12 +106,17 @@ class ExecutionActivity : AppCompatActivity() {
     }
 
     private fun updateTask() {
-        if (currentTaskIndex < taskList.size) {
-            val task = taskList[currentTaskIndex]
-            taskTextView.text = task
+        if (currentTaskIndex < newArray.size) {
+            val task = newArray[currentTaskIndex]
+            val taskText = "${task.name}"
+            taskTextView.text = taskText
+/*            if (newArray.size > currentTaskIndex) {
+                val datalist = newArray[currentTaskIndex]
+            }
+ */
 //            currentTaskIndex++
         }
-        if (currentTaskIndex == taskList.size) {
+        if (currentTaskIndex == newArray.size) {
             finish()
             val nextIntent = Intent(this@ExecutionActivity, EndActivity::class.java)
             startActivity(nextIntent)
