@@ -2,11 +2,14 @@ package com.example.myapplication2
 
 import android.content.ContentValues
 import android.content.Context
+import android.content.res.Resources
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
 class DBHelper(context: Context): SQLiteOpenHelper(context, "Userdata", null, 1) {
+
+    private val resources: Resources = context.resources
     override fun onCreate(p0: SQLiteDatabase?) {
         p0?.execSQL("create table Userdata (name TEXT primary key, contact INTEGER, character_item_id INTEGER DEFAULT '1' NOT NULL, FOREIGN KEY (character_item_id) REFERENCES characterdata(item_id))")
         p0?.execSQL("create table characterdata (item_id INTEGER primary key, item_name TEXT)")
@@ -18,6 +21,11 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, "Userdata", null, 1)
         p0?.execSQL("drop table if exists Userdata")
         p0?.execSQL("drop table if exists characterdata")
         onCreate(p0)
+    }
+
+    fun findPositionForPhone(initialPhone: Int): Int {
+        val spinnerItems = resources.getStringArray(R.array.spinner_items)
+        return spinnerItems.indexOfFirst { it.contains("$initialPhone") }
     }
 
     fun saveCharacterData(item_id: Int): Boolean {

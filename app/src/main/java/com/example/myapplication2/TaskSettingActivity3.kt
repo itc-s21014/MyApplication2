@@ -29,7 +29,6 @@ class TaskSettingActivity3 : AppCompatActivity() {
         db = DBHelper(this)
 
         name.setText(intent.getStringExtra("name"))
-        phone.setSelection(intent.getIntExtra("phone", 1))
 
         ArrayAdapter.createFromResource(
             this,
@@ -70,5 +69,8 @@ class TaskSettingActivity3 : AppCompatActivity() {
             }
             startActivity(intent)
         }
+        val initialPhone = intent.getIntExtra("phone", 1)
+        val position = db.findPositionForPhone(initialPhone)
+        phone.setSelection(position)
     }
 }
