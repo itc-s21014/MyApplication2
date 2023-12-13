@@ -3,7 +3,6 @@ package com.example.myapplication2
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Spinner
@@ -29,16 +28,7 @@ class TaskSettingActivity3 : AppCompatActivity() {
         db = DBHelper(this)
 
         name.setText(intent.getStringExtra("name"))
-        phone.setSelection(intent.getIntExtra("phone", 1))
-
-        ArrayAdapter.createFromResource(
-            this,
-            R.array.spinner_items,
-            android.R.layout.simple_spinner_item
-        ).also { adapter ->
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            phone.adapter = adapter
-        }
+//        phone.setText(intent.getStringExtra("phone"))
 
         delete.setOnClickListener {
             val intent = Intent(this, TaskSettingActivity::class.java)
@@ -59,7 +49,7 @@ class TaskSettingActivity3 : AppCompatActivity() {
             val intent = Intent(this, TaskSettingActivity::class.java)
             val names = name.text.toString()
             val selectedPhone = phone.selectedItem.toString()
-            val numbers = selectedPhone.split("分")[0].trim().toIntOrNull() ?: 0
+            val numbers = selectedPhone.split("分")[0].toIntOrNull() ?: 0
             val updatedata = db.updateuserdata(names, numbers)
 
             if (updatedata==true){
