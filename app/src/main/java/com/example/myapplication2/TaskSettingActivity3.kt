@@ -47,7 +47,7 @@ class TaskSettingActivity3 : AppCompatActivity() {
         edit.setOnClickListener {
             val intent = Intent(this, TaskSettingActivity::class.java)
             val names = name.text.toString()
-            val numbers = phone.text.toString()
+            val numbers = phone.text.toString().toInt()
             val updatedata = db.updateuserdata(names, numbers)
 
             if (updatedata==true){

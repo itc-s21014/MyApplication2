@@ -43,9 +43,9 @@ class TaskSettingActivity2 : AppCompatActivity() {
             val intent = Intent(this, TaskSettingActivity::class.java)
             val task = binding.textedit.text.toString()
             val names = name.text.toString()
-            val numbers = phone.selectedItem.toString()
+            val numbers = phone.selectedItem.toString().toInt()
 
-            if (TextUtils.isEmpty(names) || TextUtils.isEmpty(numbers)){
+            if (TextUtils.isEmpty(names)){
                 Toast.makeText(this, "Add Name & Phone Number", Toast.LENGTH_SHORT).show()
             }
             else{

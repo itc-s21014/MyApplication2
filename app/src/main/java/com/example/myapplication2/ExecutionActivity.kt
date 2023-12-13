@@ -58,7 +58,7 @@ class ExecutionActivity : AppCompatActivity() {
 
         displayCurrentTime()
 
-        updateRealTime()
+//        updateRealTime()
 
         dbh = DBHelper(this)
 
@@ -83,7 +83,7 @@ class ExecutionActivity : AppCompatActivity() {
         newArray = ArrayList()
         while (newcursor!!.moveToNext()) {
             val uname = newcursor.getString(0)
-            val unumber = newcursor.getString(1)
+            val unumber = newcursor.getInt(1)
             newArray.add(Datalist(uname, unumber))
         }
         Log.d("nandemo iiyo", newArray.toString())
@@ -110,6 +110,7 @@ class ExecutionActivity : AppCompatActivity() {
             val task = newArray[currentTaskIndex]
             val taskText = "${task.name}"
             taskTextView.text = taskText
+            timeRangeTextView.text = "${task.contact}"
 /*            if (newArray.size > currentTaskIndex) {
                 val datalist = newArray[currentTaskIndex]
             }
@@ -158,7 +159,7 @@ class ExecutionActivity : AppCompatActivity() {
         timeTextView.text = currentTime
     }
 
-    private fun updateRealTime() {
+/*    private fun updateRealTime() {
         val timeRangeTextView = findViewById<TextView>(R.id.timeRangeTextView)
 //        val textView7 = findViewById<TextView>(R.id.textView7)
 
@@ -173,7 +174,7 @@ class ExecutionActivity : AppCompatActivity() {
             }
         })
     }
-
+ */
     private fun scheduleScreenTransition(context: Context) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(context, EndActivity::class.java)

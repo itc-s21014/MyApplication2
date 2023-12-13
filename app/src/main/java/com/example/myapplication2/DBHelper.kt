@@ -41,7 +41,7 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, "Userdata", null, 1)
     }
 
 
-    fun saveuserdata(name: String, contact: String, characteritemid: Int): Boolean {
+    fun saveuserdata(name: String, contact: Int, characteritemid: Int): Boolean {
         val p0 = this.writableDatabase
         val cv = ContentValues()
         cv.put("name", name)
@@ -54,7 +54,7 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, "Userdata", null, 1)
         return true
     }
 
-    fun updateuserdata(name: String, contact: String): Boolean {
+    fun updateuserdata(name: String, contact: Int): Boolean {
         val p0 = this.writableDatabase
         val cv = ContentValues()
         cv.put("contact", contact)

@@ -57,7 +57,7 @@ class TaskSettingActivity : AppCompatActivity() {
         newArray = ArrayList<Datalist>()
         while (newcursor!!.moveToNext()){
             val uname = newcursor.getString(0)
-            val unumber = newcursor.getString(1)
+            val unumber = newcursor.getInt(1)
             newArray.add(Datalist(uname, unumber))
         }
         adapter = MyAdapter(newArray)

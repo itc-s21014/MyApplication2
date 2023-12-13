@@ -41,6 +41,6 @@ class MyAdapter(var userList: ArrayList<Datalist>): RecyclerView.Adapter<MyAdapt
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentItem = userList[position]
         holder.tname.text = currentItem.name
-        holder.tnumber.text = currentItem.contact
+        holder.tnumber.text = currentItem.contact.toString()
     }
 }
