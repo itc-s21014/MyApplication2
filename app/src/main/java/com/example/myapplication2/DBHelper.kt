@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper
 
 class DBHelper(context: Context): SQLiteOpenHelper(context, "Userdata", null, 1) {
     override fun onCreate(p0: SQLiteDatabase?) {
-        p0?.execSQL("create table Userdata (name TEXT primary key, contact TEXT, character_item_id INTEGER DEFAULT '1' NOT NULL, FOREIGN KEY (character_item_id) REFERENCES characterdata(item_id))")
+        p0?.execSQL("create table Userdata (name TEXT primary key, contact INTEGER, character_item_id INTEGER DEFAULT '1' NOT NULL, FOREIGN KEY (character_item_id) REFERENCES characterdata(item_id))")
         p0?.execSQL("create table characterdata (item_id INTEGER primary key, item_name TEXT)")
         p0?.execSQL("INSERT INTO characterdata (item_id, item_name) VALUES('1', 'てきぱき')")
         p0?.execSQL("INSERT INTO characterdata (item_id, item_name) VALUES('2', 'のんびり')")
