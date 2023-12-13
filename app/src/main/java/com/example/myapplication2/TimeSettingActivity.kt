@@ -15,7 +15,7 @@ class TimeSettingActivity : AppCompatActivity() {
         binding = ActivityTimeSettingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.timetext1.setOnClickListener {
+        binding.button4.setOnClickListener {
             val calendar = Calendar.getInstance()
             val hour = calendar.get(Calendar.HOUR_OF_DAY)
             val minute = calendar.get(Calendar.MINUTE)
@@ -24,24 +24,7 @@ class TimeSettingActivity : AppCompatActivity() {
                 this,
                 TimePickerDialog.OnTimeSetListener { _, selectedHour, selectedMinute ->
                     val selectedTime = "$selectedHour:$selectedMinute"
-                    binding.timetext1.setText(selectedTime)
-                },
-                hour,
-                minute,
-                true
-            )
-            timePickerDialog.show()
-        }
-        binding.timetext2.setOnClickListener {
-            val calendar = Calendar.getInstance()
-            val hour = calendar.get(Calendar.HOUR_OF_DAY)
-            val minute = calendar.get(Calendar.MINUTE)
-
-            val timePickerDialog = TimePickerDialog(
-                this,
-                TimePickerDialog.OnTimeSetListener { _, selectedHour, selectedMinute ->
-                    val selectedTime = "$selectedHour:$selectedMinute"
-                    binding.timetext2.setText(selectedTime)
+                    binding.button4.setText(selectedTime)
                 },
                 hour,
                 minute,
