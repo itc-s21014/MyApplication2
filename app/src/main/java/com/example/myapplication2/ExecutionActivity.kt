@@ -109,34 +109,37 @@ class ExecutionActivity : AppCompatActivity() {
     }
 
     private fun updateTask() {
+        Log.d("UPDATE TASK", "currentTaskIndex: ${currentTaskIndex}")
 //        currentTaskIndex++
-        handler.post(object : Runnable {
-            override fun run() {
-                if (currentTaskIndex < newArray.size) {
-                    val task = newArray[currentTaskIndex]
-                    val taskText = "${task.name}"
-                    taskTextView.text = taskText
-                    val minutesFromDatabase = task.contact
-                    timeRangeTextView.text = "${minutesFromDatabase}"
-                    val timeRangeTextView = findViewById<TextView>(R.id.timeRangeTextView)
-                    val currentTime = Calendar.getInstance()
-                    val endCurrentTime = Calendar.getInstance()
-                    endCurrentTime.add(Calendar.MINUTE, minutesFromDatabase)
-                    timeRangeTextView.text = "${dateFormat.format(currentTime.time)} - ${dateFormat.format(endCurrentTime.time)}"
+//        handler.post(object : Runnable {
+//            override fun run() {
+        if (currentTaskIndex < newArray.size) {
+            val task = newArray[currentTaskIndex]
+            val taskText = "${task.name}"
+            taskTextView.text = taskText
+            val minutesFromDatabase = task.contact
+            timeRangeTextView.text = "${minutesFromDatabase}"
+            val timeRangeTextView = findViewById<TextView>(R.id.timeRangeTextView)
+            val currentTime = Calendar.getInstance()
+            val endCurrentTime = Calendar.getInstance()
+            endCurrentTime.add(Calendar.MINUTE, minutesFromDatabase)
+            timeRangeTextView.text = "${dateFormat.format(currentTime.time)} - ${dateFormat.format(endCurrentTime.time)}"
+//            handler.postDelayed(::updateTask, minutesFromDatabase * 60 * 1000L)
+            handler.postDelayed(::updateTask, minutesFromDatabase * 1000L)
+
                     /*            if (newArray.size > currentTaskIndex) {
                             val datalist = newArray[currentTaskIndex]
                         }
              */
-                    handler.postDelayed(updateTimeRunnable, 1000)
-                }
-                if (currentTaskIndex == newArray.size) {
-                    finish()
-                    val nextIntent = Intent(this@ExecutionActivity, EndActivity::class.java)
-                    startActivity(nextIntent)
+//                    handler.postDelayed(updateTimeRunnable, 1000)
+        }
+        if (currentTaskIndex == newArray.size) {
+            finish()
+            val nextIntent = Intent(this@ExecutionActivity, EndActivity::class.java)
+            startActivity(nextIntent)
 //                    handler.postDelayed(this, 1000)
-                }
-            }
-        })
+        }
+        currentTaskIndex++
     }
 
     /*    private fun getTaskForTime(time: String): String {
