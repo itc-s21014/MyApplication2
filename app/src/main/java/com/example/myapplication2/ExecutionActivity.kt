@@ -5,6 +5,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.database.Cursor
+import android.icu.util.Calendar
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -13,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication2.databinding.ActivityExecutionBinding
 import android.widget.TextView
 import kotlinx.coroutines.Runnable
+import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -68,7 +70,7 @@ class ExecutionActivity : AppCompatActivity() {
 
 //        runTextAnimation()
 
-        val updateTimeDelayMillis: Int = 1000 * 10
+/*        val updateTimeDelayMillis: Int = 1000 * 10
         handler.postDelayed(object : Runnable {
             override fun run() {
                 currentTaskIndex = (currentTaskIndex + 1) // % taskList.size
@@ -76,6 +78,7 @@ class ExecutionActivity : AppCompatActivity() {
                 handler.postDelayed(this, updateTimeDelayMillis.toLong())
             }
         }, updateTimeDelayMillis.toLong())
+ */
     }
 
     private fun displayuser() {
@@ -91,7 +94,7 @@ class ExecutionActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        handler.postDelayed(updateTimeRunnable, 1000)
+        handler.postDelayed(updateTimeRunnable, 0)
     }
 
     override fun onPause() {
@@ -106,22 +109,34 @@ class ExecutionActivity : AppCompatActivity() {
     }
 
     private fun updateTask() {
-        if (currentTaskIndex < newArray.size) {
-            val task = newArray[currentTaskIndex]
-            val taskText = "${task.name}"
-            taskTextView.text = taskText
-            timeRangeTextView.text = "${task.contact}"
-/*            if (newArray.size > currentTaskIndex) {
-                val datalist = newArray[currentTaskIndex]
+//        currentTaskIndex++
+        handler.post(object : Runnable {
+            override fun run() {
+                if (currentTaskIndex < newArray.size) {
+                    val task = newArray[currentTaskIndex]
+                    val taskText = "${task.name}"
+                    taskTextView.text = taskText
+                    val minutesFromDatabase = task.contact
+                    timeRangeTextView.text = "${minutesFromDatabase}"
+                    val timeRangeTextView = findViewById<TextView>(R.id.timeRangeTextView)
+                    val currentTime = Calendar.getInstance()
+                    val endCurrentTime = Calendar.getInstance()
+                    endCurrentTime.add(Calendar.MINUTE, minutesFromDatabase)
+                    timeRangeTextView.text = "${dateFormat.format(currentTime.time)} - ${dateFormat.format(endCurrentTime.time)}"
+                    /*            if (newArray.size > currentTaskIndex) {
+                            val datalist = newArray[currentTaskIndex]
+                        }
+             */
+                    handler.postDelayed(updateTimeRunnable, 1000)
+                }
+                if (currentTaskIndex == newArray.size) {
+                    finish()
+                    val nextIntent = Intent(this@ExecutionActivity, EndActivity::class.java)
+                    startActivity(nextIntent)
+//                    handler.postDelayed(this, 1000)
+                }
             }
- */
-//            currentTaskIndex++
-        }
-        if (currentTaskIndex == newArray.size) {
-            finish()
-            val nextIntent = Intent(this@ExecutionActivity, EndActivity::class.java)
-            startActivity(nextIntent)
-        }
+        })
     }
 
     /*    private fun getTaskForTime(time: String): String {
@@ -160,21 +175,23 @@ class ExecutionActivity : AppCompatActivity() {
     }
 
 /*    private fun updateRealTime() {
-        val timeRangeTextView = findViewById<TextView>(R.id.timeRangeTextView)
-//        val textView7 = findViewById<TextView>(R.id.textView7)
+    //        val textView7 = findViewById<TextView>(R.id.textView7)
 
         handler.post(object : Runnable {
             override fun run() {
-                val currentTime = SimpleDateFormat("hh:mm", Locale.getDefault()).format(Date())
-
-                timeRangeTextView.text = currentTime
-//                textView7.text = getTaskForTime(currentTime)
+                val currentTime = Calendar.getInstance()
+//                currentTime.time = DateFormat("HH:mm:ss", Locale.getDefault())
+                val endCurrentTime = Calendar.getInstance()
+                endCurrentTime.add(0, 5)
+                timeRangeTextView.text = "${dateFormat.format(currentTime.time)} - ${dateFormat.format(endCurrentTime.time)}"
+    //                textView7.text = getTaskForTime(currentTime)
 
                 handler.postDelayed(this, 1000)
             }
         })
     }
  */
+
     private fun scheduleScreenTransition(context: Context) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(context, EndActivity::class.java)
