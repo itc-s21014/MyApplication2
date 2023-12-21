@@ -31,6 +31,7 @@ class ExecutionActivity : AppCompatActivity() {
     private lateinit var dbh: DBHelper
     private lateinit var newArray: ArrayList<Datalist>
     private var currentTaskIndex = 0
+    private var shouldUpdate = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +43,7 @@ class ExecutionActivity : AppCompatActivity() {
         updateTimeRunnable = Runnable { updateClock() }
 
         binding.resetBtn.setOnClickListener {
+            shouldUpdate = false
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
@@ -113,34 +115,37 @@ class ExecutionActivity : AppCompatActivity() {
 //        currentTaskIndex++
 //        handler.post(object : Runnable {
 //            override fun run() {
-        if (currentTaskIndex < newArray.size) {
-            val task = newArray[currentTaskIndex]
-            val taskText = "${task.name}"
-            taskTextView.text = taskText
-            val minutesFromDatabase = task.contact
-            timeRangeTextView.text = "${minutesFromDatabase}"
-            val timeRangeTextView = findViewById<TextView>(R.id.timeRangeTextView)
-            val currentTime = Calendar.getInstance()
-            val endCurrentTime = Calendar.getInstance()
+        if (shouldUpdate) {
+            if (currentTaskIndex < newArray.size) {
+                val task = newArray[currentTaskIndex]
+                val taskText = "${task.name}"
+                taskTextView.text = taskText
+                val minutesFromDatabase = task.contact
+                timeRangeTextView.text = "${minutesFromDatabase}"
+                val timeRangeTextView = findViewById<TextView>(R.id.timeRangeTextView)
+                val currentTime = Calendar.getInstance()
+                val endCurrentTime = Calendar.getInstance()
 //            endCurrentTime.add(Calendar.MINUTE, minutesFromDatabase)
-            endCurrentTime.add(Calendar.SECOND, minutesFromDatabase)
-            timeRangeTextView.text = "${dateFormat.format(currentTime.time)} - ${dateFormat.format(endCurrentTime.time)}"
+                endCurrentTime.add(Calendar.SECOND, minutesFromDatabase)
+                timeRangeTextView.text =
+                    "${dateFormat.format(currentTime.time)} - ${dateFormat.format(endCurrentTime.time)}"
 //            handler.postDelayed(::updateTask, minutesFromDatabase * 60 * 1000L)
-            handler.postDelayed(::updateTask, minutesFromDatabase * 1000L)
+                handler.postDelayed(::updateTask, minutesFromDatabase * 1000L)
 
-                    /*            if (newArray.size > currentTaskIndex) {
+                /*            if (newArray.size > currentTaskIndex) {
                             val datalist = newArray[currentTaskIndex]
                         }
              */
 //                    handler.postDelayed(updateTimeRunnable, 1000)
-        }
-        if (currentTaskIndex == newArray.size) {
-            finish()
-            val nextIntent = Intent(this@ExecutionActivity, EndActivity::class.java)
-            startActivity(nextIntent)
+            }
+            if (currentTaskIndex == newArray.size) {
+                finish()
+                val nextIntent = Intent(this@ExecutionActivity, EndActivity::class.java)
+                startActivity(nextIntent)
 //                    handler.postDelayed(this, 1000)
+            }
+            currentTaskIndex++
         }
-        currentTaskIndex++
     }
 
     /*    private fun getTaskForTime(time: String): String {
