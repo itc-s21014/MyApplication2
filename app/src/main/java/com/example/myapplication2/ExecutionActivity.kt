@@ -122,7 +122,8 @@ class ExecutionActivity : AppCompatActivity() {
             val timeRangeTextView = findViewById<TextView>(R.id.timeRangeTextView)
             val currentTime = Calendar.getInstance()
             val endCurrentTime = Calendar.getInstance()
-            endCurrentTime.add(Calendar.MINUTE, minutesFromDatabase)
+//            endCurrentTime.add(Calendar.MINUTE, minutesFromDatabase)
+            endCurrentTime.add(Calendar.SECOND, minutesFromDatabase)
             timeRangeTextView.text = "${dateFormat.format(currentTime.time)} - ${dateFormat.format(endCurrentTime.time)}"
 //            handler.postDelayed(::updateTask, minutesFromDatabase * 60 * 1000L)
             handler.postDelayed(::updateTask, minutesFromDatabase * 1000L)

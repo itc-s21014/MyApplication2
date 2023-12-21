@@ -58,7 +58,7 @@ class TaskSettingActivity3 : AppCompatActivity() {
             val intent = Intent(this, TaskSettingActivity::class.java)
             val names = name.text.toString()
             val selectedPhone = phone.selectedItem.toString()
-            val numbers = selectedPhone.split("分")[0].trim().toIntOrNull() ?: 0
+            val numbers = selectedPhone.split("秒")[0].toIntOrNull() ?: 0
             val updatedata = db.updateuserdata(names, numbers)
 
             if (updatedata==true){
