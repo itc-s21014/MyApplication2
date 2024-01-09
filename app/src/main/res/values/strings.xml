@@ -44,8 +44,11 @@
     <string name="insert">insert</string>
     <string name="read">read</string>
     <array name="spinner_items">
-        <item>10秒</item>
-        <item>20秒</item>
-        <item>30秒</item>
+        <item>5分</item>
+        <item>10分</item>
+        <item>15分</item>
+        <item>20分</item>
+        <item>25分</item>
+        <item>30分</item>
     </array>
 </resources>
