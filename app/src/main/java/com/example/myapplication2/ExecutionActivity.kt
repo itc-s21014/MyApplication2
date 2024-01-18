@@ -130,7 +130,7 @@ class ExecutionActivity : AppCompatActivity() {
                 timeRangeTextView.text =
                     "${dateFormat.format(currentTime.time)} - ${dateFormat.format(endCurrentTime.time)}"
 //            handler.postDelayed(::updateTask, minutesFromDatabase * 60 * 1000L)
-                handler.postDelayed(::updateTask, minutesFromDatabase * 1000L)
+                handler.postDelayed(::updateTask, minutesFromDatabase * 60 * 1000L)
 
                 /*            if (newArray.size > currentTaskIndex) {
                             val datalist = newArray[currentTaskIndex]
@@ -205,7 +205,7 @@ class ExecutionActivity : AppCompatActivity() {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(context, EndActivity::class.java)
         val pendingIntent =
-            PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+            PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
 
         val triggerTimeMillis = System.currentTimeMillis() + (5 * 60 * 1000) // 5分後に遷移
 
